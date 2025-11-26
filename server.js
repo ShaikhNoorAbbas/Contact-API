@@ -20,21 +20,29 @@ mongoose
 //@api endpoint -> /api/user/register
 
 app.post("/api/user/register", async (req, res) => {
-
   const { name, email, password } = req.body;
-  
+
   console.log("Data from FrontEnd", req.body);
 
   // Validating Before Sending Data to Database
   if ((name == "" || email == "", password == "")) {
-    res.json({ message: "All Fields are Required" });
+    return res.json({ message: "All Fields are Required" });
   } else {
-    // Sending Data to database
-    const response = await User.create({ name, email, password });
-    res.json({
-      message: "Data Saved to Database",
-      body: req.body,
-    });
+    // Checking if Email Already Exists or not
+    let foundUser = await User.findOne({ email });
+    if (foundUser) {
+      return res.json({
+        message: `${email} Already Exists in Database`,
+        success: false,
+      });
+    } else {
+      // Sending Data to database
+      const response = await User.create({ name, email, password });
+      return res.json({
+        message: "Data Saved to Database",
+        body: response,
+      });
+    }
   }
 });
 
