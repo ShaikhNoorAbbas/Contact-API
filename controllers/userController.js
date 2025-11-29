@@ -1,4 +1,4 @@
-import { User } from "../Models/user.js";
+import { User } from "../Models/userModel.js";
 import bcrypt from "bcryptjs";
 
 export let register = async (req, res) => {
@@ -34,3 +34,5 @@ export let register = async (req, res) => {
     }
   }
 };
+
+export function login() {}

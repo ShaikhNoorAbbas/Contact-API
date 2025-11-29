@@ -1,11 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-import bodyParser from "express";
-import { register } from "./controllers/user.js";
+import userRouter from "./routes/userRouters.js";
 
 let app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 // establish connection
 mongoose
@@ -15,12 +14,7 @@ mongoose
   .then(() => console.log(`Connected to MongoDB`))
   .catch((error) => console.log(`Error: ${error}`));
 
-// user Routes
-// @api dsc -> register
-//@api method -> post
-//@api endpoint -> /api/user/register
-
-app.post("/api/user/register", register);
+app.use("/api/user", userRouter);
 
 let port = 1000;
 
