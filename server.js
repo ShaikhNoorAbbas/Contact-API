@@ -14,6 +14,7 @@ mongoose
   .then(() => console.log(`Connected to MongoDB`))
   .catch((error) => console.log(`Error: ${error}`));
 
+//using Routes
 app.use("/api/user", userRouter);
 
 let port = 1000;
