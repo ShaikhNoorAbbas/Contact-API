@@ -1,6 +1,6 @@
 import { User } from "../Models/userModel.js";
 import bcrypt from "bcryptjs";
-
+import jwt from "jsonwebtoken";
 export let register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -80,8 +80,15 @@ export async function login(req, res) {
           success: false,
         });
       } else {
+        // creating JWT Token
+        const tokenCreate = jwt.sign({ userId: userFound._id }, "SampleKey", {
+          expiresIn: "1d",
+        });
+        // Giving Back Response
         return res.json({
           message: `Welcome ${userFound.name}`,
+          token: tokenCreate,
+          success: true,
         });
       }
     }
