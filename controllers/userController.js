@@ -5,7 +5,7 @@ export let register = async (req, res) => {
   const { name, email, password } = req.body;
   console.log("Data from FrontEnd", req.body);
   // Validating Before Sending Data to Database
-  if ((name == "" || email == "", password == "")) {
+  if (name == "" || email == "" || password == "") {
     return res.json({ message: "All Fields are Required" });
   } else {
     // Checking if Email Already Exists or not
